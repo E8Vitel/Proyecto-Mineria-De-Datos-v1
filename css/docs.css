@@ -1,0 +1,23 @@
+img {
+    width: 75px;
+    height: 75px;
+    margin-right: 10px;
+}
+
+body {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.bordes {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.bordes:hover {
+    padding: 20px;
+}
+

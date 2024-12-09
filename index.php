@@ -8,12 +8,12 @@
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- CSS -->
-     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <title>Inicio</title>
 </head>
 <body>
     <?php include 'nav.php';?>
-    
+
     <div class="container-fluid contenedor">
         <h2>Inicio</h2>
         <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis ante vitae risus vulputate pulvinar. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam pulvinar, odio ut malesuada volutpat, sem augue facilisis magna, tristique gravida nibh tortor id est. Curabitur sagittis diam eu volutpat sagittis. Suspendisse potenti. Cras a ex dictum, sollicitudin neque ut, pulvinar erat. Pellentesque eu volutpat mauris. Morbi in molestie ligula. Quisque et nisi sagittis, tincidunt quam id, consectetur enim. Nam turpis mauris, ullamcorper sed auctor ac, lobortis in dui. In a molestie risus. Mauris commodo ut nulla sit amet commodo. Vestibulum aliquam posuere nulla, egestas interdum massa ultricies a. Nunc sed porttitor justo. Nam sagittis ac urna et tempus. Nullam mattis pellentesque diam id facilisis.
