@@ -1,3 +1,23 @@
+#grafico {
+    margin-top: 20px;
+}
+
+svg {
+    font-family: Arial, sans-serif;
+}
+
+.bar {
+    fill: steelblue;
+}
+
+.bar:hover {
+    fill: orange;
+}
+
+.axis text {
+    font-size: 12px;
+}
+
 .icono {
     width: 75px;
     height: 75px;

@@ -1,7 +1,12 @@
-img {
+.icono {
     width: 75px;
     height: 75px;
     margin-right: 10px;
+}
+
+.img-mineria {
+    width: 600px;
+    width: 500px;
 }
 
 body {
