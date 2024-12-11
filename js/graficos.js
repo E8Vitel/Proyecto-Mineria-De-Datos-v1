@@ -29,41 +29,6 @@ const barChart = new Chart(document.getElementById('barChart'), {
   }
 });
 
-// Datos para el gráfico de dispersión
-const scatterData = {
-  datasets: [{
-      label: 'Puntos de Dispersión',
-      data: [
-          { x: Math.random() * 100, y: Math.random() * 100 },
-          { x: Math.random() * 100, y: Math.random() * 100 },
-          { x: Math.random() * 100, y: Math.random() * 100 },
-          { x: Math.random() * 100, y: Math.random() * 100 },
-          { x: Math.random() * 100, y: Math.random() * 100 }
-      ],
-      backgroundColor: 'rgba(255, 99, 132, 1)',
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 1
-  }]
-};
-
-// Gráfico de Dispersión (Scatter)
-const scatterChart = new Chart(document.getElementById('scatterChart'), {
-  type: 'scatter',
-  data: scatterData,
-  options: {
-      responsive: true,
-      scales: {
-          x: {
-              type: 'linear',
-              position: 'bottom'
-          },
-          y: {
-              beginAtZero: true
-          }
-      }
-  }
-});
-
 // Datos para el gráfico de corte de pastel
 const pieData = {
   labels: ['Manzanas', 'Bananas', 'Cerezas', 'Uvas'],
@@ -115,14 +80,6 @@ const lineChart = new Chart(document.getElementById('lineChart'), {
 document.getElementById('randomizeBarChart').addEventListener('click', function() {
   barChart.data.datasets[0].data = getRandomData(5, 10, 100);
   barChart.update();
-});
-
-document.getElementById('randomizeScatterChart').addEventListener('click', function() {
-  scatterChart.data.datasets[0].data = Array.from({ length: 5 }, () => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100
-  }));
-  scatterChart.update();
 });
 
 document.getElementById('randomizePieChart').addEventListener('click', function() {

@@ -48,7 +48,7 @@
         <section class="mb-5" data-aos="fade-right">
             <div class="row">
                 <div class="col-md-6 text-center">
-                    <img src="img/D3.Js-Social.png.webp" class="img-fluid img-mineria" alt="D3.js">
+                    <img src="img/tipos-de-graficos-y-diagramas-1.jpg" class="img-fluid img-mineria" alt="D3.js">
                 </div>
                 <div class="col-md-6">
                     <h2><span class="material-symbols-outlined">bar_chart</span>Visualización de Datos</h2>

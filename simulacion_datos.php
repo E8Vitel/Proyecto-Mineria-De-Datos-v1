@@ -27,13 +27,6 @@
             <button id="randomizeBarChart" class="btn btn-primary mt-3">Randomizar Datos</button>
         </div>
 
-        <!-- Gráfico de Dispersión -->
-        <div class="mt-5">
-            <h3>Gráfico de Dispersión</h3>
-            <canvas id="scatterChart" width="400" height="200"></canvas>
-            <button id="randomizeScatterChart" class="btn btn-primary mt-3">Randomizar Datos</button>
-        </div>
-
         <!-- Gráfico de Corte de Pastel -->
         <div class="mt-5">
             <h3>Gráfico de Corte de Pastel</h3>

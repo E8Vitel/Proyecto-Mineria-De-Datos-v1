@@ -27,7 +27,7 @@
                     <div class="card-body text-center">
                         <h3 class="card-title">Quiz Interactivo</h3>
                         <p class="card-text">Pon a prueba tus conocimientos con nuestros quizes dinámicos.</p>
-                        <button class="btn btn-primary">¡Iniciar Quiz!</button>
+                        <a href="php/quiz.php" class="btn btn-primary">¡Iniciar Quiz!</a>
                     </div>
                 </div>
             </div>
