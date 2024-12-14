@@ -1,93 +1,175 @@
-// Función para generar datos aleatorios
-function getRandomData(count, min, max) {
-  return Array.from({ length: count }, () => Math.floor(Math.random() * (max - min + 1)) + min);
-}
+    // Envolver todo en una función para manejar la verificación de librerías
+    function initializeApp() {
+        // Verificar dependencias
+        if (typeof Papa === 'undefined') {
+            console.error('Papa Parse no está cargado correctamente');
+            alert('Error: No se pudo cargar la librería Papa Parse');
+            return;
+        }
 
-// Datos para el gráfico de barras
-const barData = {
-  labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
-  datasets: [{
-      label: 'Ventas (en miles)',
-      data: getRandomData(5, 10, 100),
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 1
-  }]
-};
+        if (typeof Chart === 'undefined') {
+            console.error('Chart.js no está cargado correctamente');
+            alert('Error: No se pudo cargar la librería Chart.js');
+            return;
+        }
 
-// Gráfico de Barras
-const barChart = new Chart(document.getElementById('barChart'), {
-  type: 'bar',
-  data: barData,
-  options: {
-      responsive: true,
-      scales: {
-          y: {
-              beginAtZero: true
-          }
-      }
-  }
-});
+        let parsedData = [];
+        const csvFileInput = document.getElementById('csvFileInput');
+        const tableHeader = document.getElementById('tableHeader');
+        const tableBody = document.getElementById('tableBody');
+        const cleanDataBtn = document.getElementById('cleanDataBtn');
+        const fillDataBtn = document.getElementById('fillDataBtn');
+        const barChartCanvas = document.getElementById('barChart');
+        const clusterChartCanvas = document.getElementById('clusterChart');
 
-// Datos para el gráfico de corte de pastel
-const pieData = {
-  labels: ['Manzanas', 'Bananas', 'Cerezas', 'Uvas'],
-  datasets: [{
-      label: 'Frutas',
-      data: getRandomData(4, 10, 50),
-      backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
-      borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
-      borderWidth: 1
-  }]
-};
+        // Variables globales para los gráficos
+        let barChart = null;
+        let clusterChart = null;
 
-// Gráfico de Corte de Pastel (Pie)
-const pieChart = new Chart(document.getElementById('pieChart'), {
-  type: 'pie',
-  data: pieData,
-  options: {
-      responsive: true
-  }
-});
 
-// Datos para el gráfico de líneas (con todos los meses)
-const lineData = {
-  labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-  datasets: [{
-      label: 'Temperaturas (°C)',
-      data: getRandomData(12, -5, 30),
-      fill: false,
-      borderColor: 'rgba(75, 192, 192, 1)',
-      tension: 0.1
-  }]
-};
+        csvFileInput.addEventListener('change', handleFileUpload);
+        cleanDataBtn.addEventListener('click', cleanData);
+        fillDataBtn.addEventListener('click', fillMissingData);
 
-// Gráfico de Líneas
-const lineChart = new Chart(document.getElementById('lineChart'), {
-  type: 'line',
-  data: lineData,
-  options: {
-      responsive: true,
-      scales: {
-          y: {
-              beginAtZero: true
-          }
-      }
-  }
-});
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            Papa.parse(file, {
+                header: true,
+                complete: function(results) {
+                    parsedData = results.data;
+                    displayTable(parsedData);
+                    createCharts();
+                },
+                error: function(error) {
+                    console.error('Error parsing CSV:', error);
+                    alert('Error al procesar el archivo CSV');
+                }
+            });
+        }
 
-// Funciones para randomizar los datos de cada gráfico
-document.getElementById('randomizeBarChart').addEventListener('click', function() {
-  barChart.data.datasets[0].data = getRandomData(5, 10, 100);
-  barChart.update();
-});
+        function displayTable(data) {
+            // Limpiar tabla existente
+            tableHeader.innerHTML = '';
+            tableBody.innerHTML = '';
 
-document.getElementById('randomizePieChart').addEventListener('click', function() {
-  pieChart.data.datasets[0].data = getRandomData(4, 10, 50);
-  pieChart.update();
-});
+            if (data.length === 0) return;
 
-document.getElementById('randomizeLineChart').addEventListener('click', function() {
-  lineChart.data.datasets[0].data = getRandomData(12, -5, 30);
-  lineChart.update();
-});
+            // Crear encabezados
+            const headers = Object.keys(data[0]);
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                tableHeader.appendChild(th);
+            });
+
+            // Llenar tabla
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                headers.forEach(header => {
+                    const td = document.createElement('td');
+                    td.textContent = row[header];
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function cleanData() {
+            const cleanedData = parsedData.filter(row => {
+                return Object.values(row).every(val => val !== '' && val !== null && val !== undefined);
+            });
+            parsedData = cleanedData;
+            displayTable(parsedData);
+            createCharts();
+        }
+
+        function fillMissingData() {
+            const headers = Object.keys(parsedData[0]);
+            const numericHeaders = headers.filter(header => {
+                return parsedData.some(row => !isNaN(parseFloat(row[header])));
+            });
+
+            numericHeaders.forEach(header => {
+                const values = parsedData.map(row => parseFloat(row[header])).filter(val => !isNaN(val));
+                const mean = values.reduce((a, b) => a + b, 0) / values.length;
+
+                parsedData = parsedData.map(row => {
+                    if (row[header] === '' || row[header] === null) {
+                        row[header] = mean.toFixed(2);
+                    }
+                    return row;
+                });
+            });
+
+            displayTable(parsedData);
+            createCharts();
+        }
+
+        function createCharts() {
+            // Verificar si hay datos para graficar
+            if (parsedData.length === 0) return;
+
+            // Destruir gráficos existentes de manera segura
+            if (barChart) {
+                barChart.destroy();
+                barChart = null;
+            }
+            if (clusterChart) {
+                clusterChart.destroy();
+                clusterChart = null;
+            }
+
+            // Bar Chart
+            barChart = new Chart(barChartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: parsedData.map((_, index) => `Registro ${index + 1}`),
+                    datasets: Object.keys(parsedData[0]).filter(header => {
+                        return parsedData.some(row => !isNaN(parseFloat(row[header])));
+                    }).map(header => ({
+                        label: header,
+                        data: parsedData.map(row => parseFloat(row[header])),
+                        backgroundColor: `rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255},0.6)`
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Clustering Chart (usando K-means simulado)
+            function kMeansClustering(data, k = 3) {
+                const numericData = data.map(row => 
+                    Object.values(row)
+                        .filter(val => !isNaN(parseFloat(val)))
+                        .map(parseFloat)
+                );
+
+                // Implementación simplificada de clustering
+                const centroids = numericData.slice(0, k);
+                return centroids.map((centroid, index) => ({
+                    label: `Cluster ${index + 1}`,
+                    data: numericData,
+                    backgroundColor: `rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255},0.6)`
+                }));
+            }
+
+            clusterChart = new Chart(clusterChartCanvas, {
+                type: 'scatter',
+                data: {
+                    datasets: kMeansClustering(parsedData)
+                },
+                options: {
+                    scales: {
+                        x: { type: 'linear', position: 'bottom' }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+    }
+
+    // Esperar a que el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', initializeApp);
