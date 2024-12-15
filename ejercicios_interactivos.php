@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/ejercicios.css">
     <title>Ejercicios</title>
 </head>
-<body>
+<body style="text-align: justify;">
     <?php include 'nav.php'; ?>
     <div class="container-fluid py-5 contenedor">
         <div class="text-center mb-5" data-aos="fade-down">

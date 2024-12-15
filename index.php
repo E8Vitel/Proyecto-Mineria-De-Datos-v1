@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="css/styles.css">
     <title>Inicio</title>
 </head>
-<body>
+<body style="text-align: justify;">
     <?php include 'nav.php'; ?>
 
-    <header class="bg-primary text-white text-center py-5">
+    <header class="text-white text-center py-5" style="background-color: #00233F">
         <div class="container" data-aos="fade-down">
             <h1><span class="material-symbols-outlined">school</span> Bienvenido a la Plataforma de Aprendizaje</h1>
             <p class="lead">Explora, aprende y pon a prueba tus conocimientos en programación y minería de datos.</p>

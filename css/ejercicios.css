@@ -4,25 +4,19 @@
     margin-right: 10px;
 }
 
-body {
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
 .bordes {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-bottom: 1px solid #212529;
     padding: 10px;
     margin-bottom: 10px;
     transition: 0.3s;
 }
 
 .bordes:hover {
-    padding: 20px;
+    padding: 19px;
+    border-bottom: 1px solid #ffffff;
 }
 
 .contenedor {
-    outline: solid 1px;
     padding-left: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
